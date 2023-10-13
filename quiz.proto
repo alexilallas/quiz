@@ -1,0 +1,32 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = "github.com/alexilallas/quiz/internal/grpc";
+
+service Quiz {
+  rpc ListQuestions (google.protobuf.Empty) returns (Questions) {}
+  rpc RegisterAnswers (Answer) returns (QuizResponse) {}
+}
+
+message Questions {
+  repeated Question questions = 1;
+}
+
+message Question {
+  string description = 1;
+  map<string,Option> options = 2;
+}
+
+message Option {
+  string description = 1;
+  bool isCorrect = 2;
+}
+
+message Answer {
+  repeated  string answer = 1;
+}
+
+message QuizResponse {
+  float correct = 1;
+  float totalQuestions = 2;
+  float percentage = 3;
+}
