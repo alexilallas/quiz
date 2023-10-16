@@ -14,7 +14,7 @@ func (Validator) Request(r *pb.Answer) error {
 
 	var err error
 	for _, v := range r.Answer {
-		if v != optionA && v != optionB && v != optionC {
+		if v != "A" && v != "B" && v != "C" {
 			err = errors.Join(err, ErrorInvalidOption(v))
 		}
 	}

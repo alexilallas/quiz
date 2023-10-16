@@ -5,6 +5,7 @@ Copyright © 2023 ALexi Lallas alexilallasengcomp@gmail.com
 package cmd
 
 import (
+	"github.com/alexilallas/quiz/internal/core/usecase"
 	pb "github.com/alexilallas/quiz/internal/grpc"
 	"github.com/alexilallas/quiz/internal/server"
 	"log"
@@ -28,8 +29,8 @@ var serverCmd = &cobra.Command{
 		}
 
 		var grpcServer = grpc.NewServer()
-
-		pb.RegisterQuizServer(grpcServer, &server.Server{})
+		server := server.ProvideServer(server.Validator{}, usecase.ProvideQuizUseCase())
+		pb.RegisterQuizServer(grpcServer, server)
 
 		log.Printf("gRPC server listening on %v", lis.Addr())
 
